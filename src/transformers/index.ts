@@ -11,6 +11,7 @@ import {
   UpdateAgentInputSchema,
   CreateRetellLLMInputSchema,
   UpdateRetellLLMInputSchema,
+  UpdateRetellLLMStatesInputSchema,
   RetellLLMOutputSchema,
   ListCallsInputSchema,
   UpdateCallInputSchema,
@@ -350,6 +351,15 @@ export function transformUpdateRetellLLMInput(
     updateData.knowledge_base_ids = input.knowledge_base_ids;
 
   return updateData;
+}
+
+export function transformUpdateRetellLLMStatesInput(
+  input: z.infer<typeof UpdateRetellLLMStatesInputSchema>
+) {
+  return {
+    states: input.states,
+    starting_state: input.startingState,
+  };
 }
 
 export function transformRetellLLMOutput(

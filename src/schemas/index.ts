@@ -747,6 +747,14 @@ export const UpdateRetellLLMInputSchema = z.object({
   knowledge_base_ids: z.array(z.string()).optional(),
 });
 
+export const UpdateRetellLLMStatesInputSchema = z.object({
+  llmId: z.string().describe("The ID of the Retell LLM to update"),
+  states: z.array(z.record(z.any())).min(1).describe("States of the LLM"),
+  startingState: z
+    .string()
+    .describe("Name of the starting state. Must match one of the state names"),
+});
+
 export const RetellLLMOutputSchema = z.object({
   llm_id: z.string(),
   version: z.number(),
