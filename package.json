@@ -1,5 +1,5 @@
 {
-  "name": "@abhaybabbar/retellai-mcp-server",
+  "name": "@getsupervisor/retellai-mcp-server",
   "version": "1.0.2",
   "type": "module",
   "main": "build/index.js",
@@ -16,12 +16,12 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.11.0",
     "dotenv": "^16.5.0",
-    "retell-sdk": "^4.28.0"
+    "retell-sdk": "^4.28.0",
+    "typescript": "^5.8.3"
   },
   "bin": {
-    "@abhaybabbar/retellai-mcp-server": "build/index.js"
+    "@getsupervisor/retellai-mcp-server": "build/index.js"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abhaybabbar/retellai-mcp-server.git"

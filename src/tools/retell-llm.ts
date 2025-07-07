@@ -1,14 +1,17 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import Retell from "retell-sdk";
+import type { LlmUpdateParams } from "retell-sdk/resources/llm.js";
 
 import {
   CreateRetellLLMInputSchema,
   GetRetellLLMInputSchema,
   UpdateRetellLLMInputSchema,
+  UpdateRetellLLMStatesInputSchema,
 } from "../schemas/index.js";
 import {
   transformRetellLLMInput,
   transformUpdateRetellLLMInput,
+  transformUpdateRetellLLMStatesInput,
   transformRetellLLMOutput,
 } from "../transformers/index.js";
 import { createToolHandler } from "./utils.js";
@@ -70,6 +73,25 @@ export const registerRetellLLMTools = (
         console.error(`Error updating Retell LLM: ${error.message}`);
         throw error;
       }
+    })
+  );
+
+  server.tool(
+    "update_retell_llm_states",
+    "Updates states and starting state of a Retell LLM",
+    UpdateRetellLLMStatesInputSchema.shape,
+    createToolHandler(async (data) => {
+      const stateNames = data.states.map((s: any) => s.name);
+      if (!stateNames.includes(data.startingState)) {
+        throw new Error(
+          "startingState must match one of the provided state names"
+        );
+      }
+      const updateDto = transformUpdateRetellLLMStatesInput(
+        data
+      ) as LlmUpdateParams;
+      const updatedLLM = await retellClient.llm.update(data.llmId, updateDto);
+      return transformRetellLLMOutput(updatedLLM);
     })
   );
 
