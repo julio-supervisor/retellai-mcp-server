@@ -2,7 +2,6 @@ import { z } from "zod";
 import {
   CreatePhoneCallInputSchema,
   CreateWebCallInputSchema,
-  CallOutputSchema,
   AgentOutputSchema,
   PhoneNumberOutputSchema,
   VoiceOutputSchema,

@@ -747,9 +747,40 @@ export const UpdateRetellLLMInputSchema = z.object({
   knowledge_base_ids: z.array(z.string()).optional(),
 });
 
+// Schema para estados de Retell LLM, según LlmUpdateParams.State
+const RetellLLMStateSchema = z.object({
+  name: z.string(),
+  state_prompt: z.string(),
+  edges: z
+    .array(
+      z.object({
+        destination_state_name: z.string(),
+        description: z.string(),
+        parameters: z
+          .object({
+            type: z.literal("object"),
+            properties: z.record(z.any()),
+            required: z.array(z.string()),
+          })
+          .optional(),
+      })
+    )
+    .optional(),
+  tools: z
+    .array(
+      z.object({
+        type: z.string(),
+        name: z.string(),
+        description: z.string(),
+        parameters: z.record(z.any()).optional(),
+      })
+    )
+    .optional(),
+});
+
 export const UpdateRetellLLMStatesInputSchema = z.object({
   llmId: z.string().describe("The ID of the Retell LLM to update"),
-  states: z.array(z.record(z.any())).min(1).describe("States of the LLM"),
+  states: z.array(RetellLLMStateSchema).min(1).describe("States of the LLM"),
   startingState: z
     .string()
     .describe("Name of the starting state. Must match one of the state names"),

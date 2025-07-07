@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import Retell from "retell-sdk";
+import type { LlmUpdateParams } from "retell-sdk/resources/llm.js";
 
 import {
   CreateRetellLLMInputSchema,
@@ -86,7 +87,9 @@ export const registerRetellLLMTools = (
           "startingState must match one of the provided state names"
         );
       }
-      const updateDto = transformUpdateRetellLLMStatesInput(data);
+      const updateDto = transformUpdateRetellLLMStatesInput(
+        data
+      ) as LlmUpdateParams;
       const updatedLLM = await retellClient.llm.update(data.llmId, updateDto);
       return transformRetellLLMOutput(updatedLLM);
     })
